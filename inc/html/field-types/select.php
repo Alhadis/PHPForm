@@ -77,4 +77,45 @@
 
 			return $output;
 		}
+		
+		
+
+		/**
+		 * Replaces each option's value with its index of appearance in the container's options list.
+		 * 
+		 * This is helpful for fields that've been constructed using strings as option-lists, when
+		 * integer-based values are desired for each option.
+		 * 
+		 * For example:
+		 * 
+		 *		<option value="Apple">Apple</option>
+		 * 		<option value="Banana">Banana</option>
+		 * 
+		 * Would be replaced with this:
+		 * 
+		 * 		<option value="0">Apple</option>
+		 * 		<option value="1">Banana</option>
+		 * 
+		 * @param int $count_from - Integer to start counting from
+		 * @return int - Next value to be assigned to an option
+		 */		
+		function autoindex($count_from = 0){
+			$count	=	count($this->options);
+			$value	=	$count_from;
+
+			for($i = 0; $i < $count; ++$i){
+				$opt	=&	$this->options[$i];
+
+				# Make sure to autoindex any optgroups too.
+				if(method_exists($opt, 'autoindex'))
+					$value	=	$opt->autoindex($value);
+
+				else{
+					$opt->value = $value;
+					++$value;
+				}
+			}
+
+			return $value;
+		}
 	}

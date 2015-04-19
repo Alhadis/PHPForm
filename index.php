@@ -9,6 +9,56 @@
 </div>';
 
 	
+	$select_field	=	new SelectField(array(
+		'name'		=>	'favourite-fruit',
+		'options'	=>	array(
+			'A-I'	=>	array(
+				'Apple',
+				'Banana',
+				'Coconut',
+				'Date',
+				'Elderberry',
+				'Fig',
+				'Grape',
+				'Honeydew',
+				'Ilama'
+			),
+
+			'J-L'	=>	array(
+				'Jujube',
+				'Kumquat',
+				'Lime'
+			),
+
+			'M-Z'	=>	array(
+				'Mango',
+				'Nutmeg',
+				'Orange',
+				'Pear',
+				'Quince',
+				'Raspberry',
+				'Strawberry',
+				'Tomato',
+				'Ugni',
+				'Vanilla',
+				'Watermelon',
+				'Xigua',
+				'Yew'
+			),
+
+			'Zwetschge',
+			new SelectFieldOption(array(
+				'value'		=>	'faaaark',
+				'label'		=>	'Fuuuuck',
+				'data-attr'	=>	'Something'
+			))
+		),
+		'template'	=>	$row
+	));
+	
+	$select_field->autoindex();
+
+	
 	$form	=	new Form(array(
 		'enctype'		=>	'multipart/form-data',
 		'method'		=>	'post',
@@ -51,53 +101,7 @@
 			)),
 
 
-			'fruit'	=>	new SelectField(array(
-				'name'		=>	'favourite-fruit',
-				'options'	=>	array(
-					'A-I'	=>	array(
-						'Apple',
-						'Banana',
-						'Coconut',
-						'Date',
-						'Elderberry',
-						'Fig',
-						'Grape',
-						'Honeydew',
-						'Ilama'
-					),
-					
-					'J-L'	=>	array(
-						'Jujube',
-						'Kumquat',
-						'Lime'
-					),
-					
-					
-					'M-Z'	=>	array(
-						'Mango',
-						'Nutmeg',
-						'Orange',
-						'Pear',
-						'Quince',
-						'Raspberry',
-						'Strawberry',
-						'Tomato',
-						'Ugni',
-						'Vanilla',
-						'Watermelon',
-						'Xigua',
-						'Yew'
-					),
-
-					'Zwetschge',
-					new SelectFieldOption(array(
-						'value'		=>	'faaaark',
-						'label'		=>	'Fuuuuck',
-						'data-attr'	=>	'Something'
-					))
-				),
-				'template'	=>	$row
-			)),
+			'fruit'	=>	$select_field,
 
 
 			'submit'		=>	new SubmitField(array(
