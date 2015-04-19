@@ -58,7 +58,8 @@
 	
 	$select_field->autoindex();
 
-	
+	include 'countries.php';
+
 	$form	=	new Form(array(
 		'enctype'		=>	'multipart/form-data',
 		'method'		=>	'post',
@@ -90,6 +91,13 @@
 				'placeholder'	=>	'Include your e-mail "addy" so we get to spam you with pointless shit.',
 				'template'		=>	$row
 			),
+			
+			'dob'			=>	array(
+				'type'		=>	'date',
+				'name'		=>	'dob',
+				'required'	=>	TRUE,
+				'template'	=>	$row,
+			),
 
 
 			'message'		=>	new TextareaField(array(
@@ -101,7 +109,8 @@
 			)),
 
 
-			'fruit'	=>	$select_field,
+			'fruit'		=>	$select_field,
+			'countries'	=>	$countries,
 
 
 			'submit'		=>	new SubmitField(array(

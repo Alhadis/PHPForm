@@ -6,10 +6,6 @@
 		var $error_blank	=	'Please include an e-mail address';
 		var $error_format	=	'Please include a correctly-formatted e-mail address.';
 
-		function __construct($args = NULL){
-			parent::__construct($args);
-		}
-
 
 		function get_error($value = NULL){
 			if(!preg_match(self::$valid_email, $value))

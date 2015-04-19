@@ -5,17 +5,25 @@
 
 
 	class SelectField extends Field{
+
+		# Option parsing modes
+		const OPTIONS_BY_KEY	=	1;
+		const OPTIONS_BY_VALUE	=	2;
+
+
 		protected $tag_name		=	'select';
 		protected $self_closing	=	FALSE;
 		protected $options		=	array();
 
 
+
 		function __construct($args = NULL){
+			$parse_mode	=	intval($args['parse_mode']);
 
 			if($args['options'])
-				$this->options	=	$this->parse_options($args['options'], TRUE);
-			
-			unset($args['options']);
+				$this->options	=	$this->parse_options($args['options'], $parse_mode);
+
+			unset($args['options'], $args['parse_mode']);
 			parent::__construct($args);
 		}
 
@@ -74,15 +82,29 @@
 		 * Generates a list of SelectFieldOption instances.
 		 * 
 		 * @param string|array $options - An array of values to parse into options. Strings will be split by newline, ignoring blank values.
+		 * @param int $mode - An OPTIONS_BY_* constant controlling how option values are interpreted. Defaults to an "intelligent guess".
 		 * @return array
 		 */
-		function parse_options($options){
+		function parse_options($options, $mode = NULL){
 			$output	=	array();
-
 
 			# Allow strings to be passed in as option lists, split by newline.
 			if(is_string($options))
 				$options	=	array_filter(split(PHP_EOL, $options));
+
+
+
+			# If no parsing mode was specified, try and guess based on the keys found in the $options array.
+			if(!$mode){
+
+				# Not an associative array, so just use each string as both an option value AND label.
+				if(end(array_keys($options))+1 === count($options))
+					$mode	=	self::OPTIONS_BY_VALUE;
+
+				# Otherwise, assume it's an associative array of some description.
+				else $mode	=	self::OPTIONS_BY_KEY;
+			}
+
 
 
 			foreach($options as $key => $value){
@@ -96,14 +118,14 @@
 				else if(is_array($value)){
 					$output[]	=	new SelectFieldOptgroup(array(
 						'label'		=>	$key,
-						'options'	=>	$this->parse_options($value)
+						'options'	=>	$this->parse_options($value, $mode)
 					));
 				}
 
 
 				# Otherwise, use the item as the value of a new SelectFieldOption instance. 
 				else $output[]	=	new SelectFieldOption(array(
-					'value'		=>	$value,
+					'value'		=>	$mode == self::OPTIONS_BY_VALUE ? $value : $key,
 					'innerHTML'	=>	$value
 				));
 			}
