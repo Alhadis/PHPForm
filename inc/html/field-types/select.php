@@ -27,12 +27,45 @@
 			$value	=	$attr['value'];
 			unset($attr['value']);
 
+			# Mark selected options
+			$this->select_active($value);
+
 			$options	=	'';
 			foreach($this->options as $option)
 				$options	.=	$option->render();
-			
+
 			$this->innerHTML	=	$options;
 			return parent::render();
+		}
+
+
+
+		/**
+		 * Marks any options with matching values as selected.
+		 * 
+		 * @param mixed $value - Value to compare with
+		 * @param array $options - Array of option objects to parse. Defaults to instance's own options array.
+		 */
+		protected function select_active($value, $options = NULL){
+			$options	=	$options ?: $this->options;
+
+			$count	=	count($options);
+			for($i = 0; $i < $count; ++$i){
+				$opt	=	$options[$i];
+
+				# This is an optgroup, so parse its options list separately.
+				if(is_a($opt, 'SelectFieldOptgroup'))
+					$this->select_active($value, $opt->options);
+
+
+				# Option's value matches: mark as selected.
+				else if($opt->value == $value && $value !== NULL)
+					$opt->selected	=	'selected';
+
+
+				# Doesn't match, don't mark as selected
+				else unset($opt->selected);
+			}
 		}
 
 
