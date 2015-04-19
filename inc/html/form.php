@@ -6,6 +6,7 @@
 	include_once 'field-types/textarea.php';
 	include_once 'field-types/email.php';
 	include_once 'field-types/submit.php';
+	include_once 'field-types/select.php';
 
 
 	class Form extends HTMLElement{

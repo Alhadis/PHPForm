@@ -6,13 +6,11 @@
 		protected $self_closing	=	FALSE;
 		
 
-		
-		function tag(){
+		function render(){
 			$attr	=	$this->_attr;
 			$value	=	$attr['value'];
 			unset($attr['value']);
 
 			return '<textarea'. $this->html_attr($attr) . '>' . htmlspecialchars($value) . '</textarea>';
 		}
-		
 	}

@@ -8,6 +8,7 @@
 
 		protected $tag_name			=	'input';
 		protected $self_closing		=	TRUE;
+		protected $token_attr		=	array('label', 'error');
 
 		
 		/** Set to TRUE when subclassing input types that don't need validation and transmit no meaningful info (e.g., reset/submit, etc).  */
@@ -23,7 +24,7 @@
 		 * Human-readable version of this field's name (e.g., "Your surname" for "last-name").
 		 * If omitted, will use the capitalised form of the field's $name property with dashes/underscores replaced with spaces.
 		 */
-		var $label	=	'';
+		var $label	=	NULL;
 
 
 		/**
@@ -84,35 +85,6 @@
 			#	A request variable matches this field's name, so... yoink.
 			if(isset($_REQUEST[$this->name]))
 				$this->value	=	$_REQUEST[$this->name];
-		}
-
-
-
-
-
-		/**
-		 * Generate the field's markup.
-		 * @return string The HTML code populated with data.
-		 */
-		function render(){
-			$attr	=&	$this->_attr;
-
-
-			#	Generate the field's input element.
-			$tag	=	$this->open() . $this->close();
-
-
-			#	No template string defined; just return the generated tag.
-			if(!$this->template) return $tag;
-
-
-			#	We have a template; now allow some other properties to be tokenised.
-			$attr['tag']	=	$tag;
-			$attr['label']	=	$this->label;
-			$attr['error']	=	$this->error;
-
-
-			return $this->tokenise($this->template, $attr);
 		}
 
 

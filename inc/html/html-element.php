@@ -3,16 +3,26 @@
 	class HTMLElement{
 		protected $_attr		=	array();
 		protected $tag_name		=	'';
+		protected $innerHTML	=	'';
 		protected $self_closing	=	FALSE;
+		protected $token_attr	=	array();
 
 
 		/**
 		 * HTML block enclosing the element.
 		 * Any property of the element's $_attr array can be passed in as though it were a local variable. E.g.,
-		 * 		'<div id="wrapper-$name"><label>$label:</label><input type="$type" value="$value" /></div>'
+		 * 		'<input type="$type" value="$value" />'
+		 * Additional properties can be passed in by specifying their names in the instance's $token_attr array.
 		 */
-		var $template		=	'';
+		var $template	=	'';
 
+		
+		function __construct($args = NULL){
+			foreach($args as $key => $value){
+				$this->{$key}	=	$value;
+			}
+		}
+		
 		
 
 		/**
@@ -42,6 +52,7 @@
 
 		/**
 		 * Returns the HTML code for the element's opening tag.
+		 * 
 		 * @return string
 		 */
 		function open(){
@@ -57,6 +68,7 @@
 
 		/**
 		 * Returns the HTML code for the element's closing tag.
+		 * 
 		 * @return string
 		 */
 		function close(){
@@ -68,9 +80,9 @@
 
 
 
-
 		/**
 		 * Formats an array of key/value pairs as a string of HTML attributes.
+		 * 
 		 * @param array $attr - An associative array of HTML attributes.
 		 * @return string
 		 */
@@ -90,8 +102,34 @@
 				$output	.=	' '.$key.'="'.htmlentities(html_entity_decode($value)).'"';
 			return $output;
 		}
-		
-		
+
+
+
+		/**
+		 * Generate the element's markup.
+		 * 
+		 * @return string The HTML code populated with data.
+		 */
+		function render(){
+			$tag =	$this->open() . ($this->self_closing ? '' : $this->innerHTML) . $this->close();
+
+
+			#	No template string defined; just return the generated tag.
+			if(!$this->template) return $tag;
+
+
+			#	We have a template, so configure some tokens to pass to it.
+			$tokens			=	$this->_attr;
+			$tokens['tag']	=	$tag;
+
+			foreach($this->token_attr as $attr)
+				$tokens[$attr]	=	$this->{$attr};
+
+			return $this->tokenise($this->template, $tokens);
+		}
+
+
+
 		/**
 		 * Replaces any variable declarations found in a string with the accompanying values found in the supplied key/value pair.
 		 * This provides a safer and more controlled alternative to PHP's native eval function.
@@ -99,7 +137,10 @@
 		 * @example template('<input type="$type" id="$id" />', array(
 		 * 	'type'	=>	'text',
 		 *	'id'	=>	'first-name
-		 * )); 
+		 * ));
+		 * @param string $template - HTML template block
+		 * @param array $tokens - Associative array of tokens
+		 * @return string
 		 */
 		function tokenise($template, $tokens){
 			$output	=	$template;

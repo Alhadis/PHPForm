@@ -25,6 +25,7 @@
 
 
 			'last_name'		=>	new Field(array(
+				'label'		=>	'Surname',
 				'name'		=>	'last-name',
 				'id'		=>	'last-name',
 				'type'		=>	'text',
@@ -40,10 +41,61 @@
 				'template'		=>	$row
 			),
 
+
 			'message'		=>	new TextareaField(array(
 				'name'		=>	'message',
+				'value'		=>	'Type something',
 				'id'		=>	'message-box',
 				'required'	=>	TRUE,
+				'template'	=>	$row
+			)),
+
+
+			'fruit'	=>	new SelectField(array(
+				'name'		=>	'favourite-fruit',
+				'options'	=>	array(
+					'A-I'	=>	array(
+						'Apple',
+						'Banana',
+						'Coconut',
+						'Date',
+						'Elderberry',
+						'Fig',
+						'Grape',
+						'Honeydew',
+						'Ilama'
+					),
+					
+					'J-L'	=>	array(
+						'Jujube',
+						'Kumquat',
+						'Lime'
+					),
+					
+					
+					'M-Z'	=>	array(
+						'Mango',
+						'Nutmeg',
+						'Orange',
+						'Pear',
+						'Quince',
+						'Raspberry',
+						'Strawberry',
+						'Tomato',
+						'Ugni',
+						'Vanilla',
+						'Watermelon',
+						'Xigua',
+						'Yew'
+					),
+
+					'Zwetschge',
+					new SelectFieldOption(array(
+						'value'		=>	'faaaark',
+						'label'		=>	'Fuuuuck',
+						'data-attr'	=>	'Something'
+					))
+				),
 				'template'	=>	$row
 			)),
 
@@ -65,6 +117,23 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
 <meta name="viewport" content="initial-scale=1, minimum-scale=1" />
+<style>
+*{box-sizing: border-box;}
+html{
+	padding: 1em;
+}
+body{
+	margin: 1em auto;
+	max-width: 70em;
+}
+input, textarea{
+	padding: 1em;
+	margin: 0 0 1em;
+	display: block;
+	width: 100%;
+	font-size: 1.1em;
+}
+</style>
 </head>
 
 
@@ -82,7 +151,9 @@
 			<?php
 		}
 		else{
-			
+			?>
+			<h1>Dude, that submission was bullshit. Try again.</h1>
+			<?php
 		}
 	}
 ?>
