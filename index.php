@@ -1,127 +1,129 @@
 <?php
 
-	include_once 'inc/main.php';
+include_once 'inc/main.php';
 	
-	$row	=	'
+$row	=	'
 <div class="row">
 	<label for="$id">$label</label>
 	$tag
 </div>';
 
 	
-	$select_field	=	new SelectField(array(
-		'name'		=>	'favourite-fruit',
-		'options'	=>	array(
-			'A-I'	=>	array(
-				'Apple',
-				'Banana',
-				'Coconut',
-				'Date',
-				'Elderberry',
-				'Fig',
-				'Grape',
-				'Honeydew',
-				'Ilama'
-			),
-
-			'J-L'	=>	array(
-				'Jujube',
-				'Kumquat',
-				'Lime'
-			),
-
-			'M-Z'	=>	array(
-				'Mango',
-				'Nutmeg',
-				'Orange',
-				'Pear',
-				'Quince',
-				'Raspberry',
-				'Strawberry',
-				'Tomato',
-				'Ugni',
-				'Vanilla',
-				'Watermelon',
-				'Xigua',
-				'Yew'
-			),
-
-			'Zwetschge',
-			new SelectFieldOption(array(
-				'value'		=>	'faaaark',
-				'label'		=>	'Fuuuuck',
-				'data-attr'	=>	'Something'
-			))
+$select_field	=	new SelectField(array(
+	'name'		=>	'favourite-fruit',
+	'options'	=>	array(
+		'A-I'	=>	array(
+			'Apple',
+			'Banana',
+			'Coconut',
+			'Date',
+			'Elderberry',
+			'Fig',
+			'Grape',
+			'Honeydew',
+			'Ilama'
 		),
-		'template'	=>	$row
-	));
-	
-	$select_field->autoindex();
 
-	include 'countries.php';
+		'J-L'	=>	array(
+			'Jujube',
+			'Kumquat',
+			'Lime'
+		),
 
-	$form	=	new Form(array(
-		'enctype'		=>	'multipart/form-data',
-		'method'		=>	'post',
-		'novalidate'	=>	TRUE,
-		'fields'	=>	array(
+		'M-Z'	=>	array(
+			'Mango',
+			'Nutmeg',
+			'Orange',
+			'Pear',
+			'Quince',
+			'Raspberry',
+			'Strawberry',
+			'Tomato',
+			'Ugni',
+			'Vanilla',
+			'Watermelon',
+			'Xigua',
+			'Yew'
+		),
 
-			'first_name'	=>	new Field(array(
-				'name'		=>	'first-name',
-				'required'	=>	TRUE,
-				'type'		=>	'text',
-				'error_blank'	=>	'Fill something out, you fuckin\' idiot.',
-				'template'		=>	$row
-			)),
+		'Zwetschge',
+		new SelectFieldOption(array(
+			'value'		=>	'faaaark',
+			'label'		=>	'Fuuuuck',
+			'data-attr'	=>	'Something'
+		))
+	),
+	'template'	=>	$row
+));
 
-
-			'last_name'		=>	new Field(array(
-				'label'		=>	'Surname',
-				'name'		=>	'last-name',
-				'id'		=>	'last-name',
-				'type'		=>	'text',
-				'template'	=>	$row
-			)),
-
-
-			'email'			=>	array(
-				'type'			=>	'email',
-				'name'			=>	'email',
-				'required'		=>	TRUE,
-				'placeholder'	=>	'Include your e-mail "addy" so we get to spam you with pointless shit.',
-				'template'		=>	$row
-			),
-			
-			'dob'			=>	array(
-				'type'		=>	'date',
-				'name'		=>	'dob',
-				'required'	=>	TRUE,
-				'template'	=>	$row,
-			),
+$select_field->autoindex();
 
 
-			'message'		=>	new TextareaField(array(
-				'name'		=>	'message',
-				'value'		=>	'Type something',
-				'id'		=>	'message-box',
-				'required'	=>	TRUE,
-				'template'	=>	$row
-			)),
+
+include 'countries.php';
+
+$form	=	new Form(array(
+	'enctype'		=>	'multipart/form-data',
+	'method'		=>	'post',
+	'novalidate'	=>	TRUE,
+	'fields'	=>	array(
+
+		'first_name'	=>	new Field(array(
+			'name'		=>	'first-name',
+			'required'	=>	TRUE,
+			'type'		=>	'text',
+			'error_blank'	=>	'Fill something out, you fuckin\' idiot.',
+			'template'		=>	$row
+		)),
 
 
-			'fruit'		=>	$select_field,
-			'countries'	=>	$countries,
+		'last_name'		=>	new Field(array(
+			'label'		=>	'Surname',
+			'name'		=>	'last-name',
+			'id'		=>	'last-name',
+			'type'		=>	'text',
+			'template'	=>	$row
+		)),
 
 
-			'submit'		=>	new SubmitField(array(
-				'label'	=>	'Submit',
-				'template'	=>	'
+		'email'			=>	array(
+			'type'			=>	'email',
+			'name'			=>	'email',
+			'required'		=>	TRUE,
+			'placeholder'	=>	'Include your e-mail "addy" so we get to spam you with pointless shit.',
+			'template'		=>	$row
+		),
+		
+		'dob'			=>	array(
+			'type'		=>	'date',
+			'name'		=>	'dob',
+			'required'	=>	TRUE,
+			'template'	=>	$row,
+		),
+
+
+		'message'		=>	new TextareaField(array(
+			'name'		=>	'message',
+			'value'		=>	'Type something',
+			'id'		=>	'message-box',
+			'required'	=>	TRUE,
+			'template'	=>	$row
+		)),
+
+
+		'fruit'		=>	$select_field,
+		'countries'	=>	$countries,
+
+
+		'submit'		=>	new SubmitField(array(
+			'label'	=>	'Submit',
+			'template'	=>	'
 <div class="row last">
 	$tag
 </div>'
-			))
-		)
-	));
+		))
+	)
+));
 ?>
 <!DOCTYPE html>
 <html>
